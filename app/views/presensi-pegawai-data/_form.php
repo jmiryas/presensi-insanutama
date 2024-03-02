@@ -1,0 +1,129 @@
+<?php
+
+use yii\helpers\Html;
+use kartik\form\ActiveForm;
+
+/* @var $this yii\web\View */
+/* @var $model app\models\base\PresensiPegawaiData */
+/* @var $form kartik\form\ActiveForm */
+
+?>
+
+<div class="presensi-pegawai-data-form">
+
+    <?php $form = ActiveForm::begin(); ?>
+
+    <?= $form->errorSummary($model); ?>
+
+    <?= $form->field($model, 'presensi_id')->textInput(['placeholder' => 'Presensi']) ?>
+
+    <?= $form->field($model, 'jadwalpresensi_id')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\app\models\base\PresensiPegawaiJadwal::find()->orderBy('jadwalpresensi_id')->asArray()->all(), 'jadwalpresensi_id', 'jadwalpresensi_id'),
+        'options' => ['placeholder' => 'Choose Presensi pegawai jadwal'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
+
+    <?= $form->field($model, 'pegawai_id')->textInput(['maxlength' => true, 'placeholder' => 'Pegawai']) ?>
+
+    <?= $form->field($model, 'tgl')->widget(\kartik\datecontrol\DateControl::classname(), [
+        'type' => \kartik\datecontrol\DateControl::FORMAT_DATE,
+        'saveFormat' => 'php:Y-m-d',
+        'ajaxConversion' => true,
+        'options' => [
+            'pluginOptions' => [
+                'placeholder' => 'Choose Tgl',
+                'autoclose' => true
+            ]
+        ],
+    ]); ?>
+
+    <?= $form->field($model, 'hari')->textInput(['maxlength' => true, 'placeholder' => 'Hari']) ?>
+
+    <?= $form->field($model, 'status_berangkat')->dropDownList([ 'HADIR' => 'HADIR', 'IZIN' => 'IZIN', 'CUTI' => 'CUTI', 'SAKIT' => 'SAKIT', ], ['prompt' => '']) ?>
+
+    <?= $form->field($model, 'status_pulang')->dropDownList([ 'HADIR' => 'HADIR', 'IZIN' => 'IZIN', 'CUTI' => 'CUTI', 'SAKIT' => 'SAKIT', ], ['prompt' => '']) ?>
+
+    <?= $form->field($model, 'cuti_id')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\app\models\base\CutiPegawaiData::find()->orderBy('cuti_id')->asArray()->all(), 'cuti_id', 'cuti_id'),
+        'options' => ['placeholder' => 'Choose Cuti pegawai data'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
+
+    <?= $form->field($model, 'izin_id')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\app\models\base\IzinPegawaiData::find()->orderBy('izin_id')->asArray()->all(), 'izin_id', 'izin_id'),
+        'options' => ['placeholder' => 'Choose Izin pegawai data'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
+
+    <?= $form->field($model, 'jam_masuk')->widget(\kartik\datecontrol\DateControl::className(), [
+        'type' => \kartik\datecontrol\DateControl::FORMAT_TIME,
+        'saveFormat' => 'php:H:i:s',
+        'ajaxConversion' => true,
+        'options' => [
+            'pluginOptions' => [
+                'placeholder' => 'Choose Jam Masuk',
+                'autoclose' => true
+            ]
+        ]
+    ]); ?>
+
+    <?= $form->field($model, 'jam_pulang')->widget(\kartik\datecontrol\DateControl::className(), [
+        'type' => \kartik\datecontrol\DateControl::FORMAT_TIME,
+        'saveFormat' => 'php:H:i:s',
+        'ajaxConversion' => true,
+        'options' => [
+            'pluginOptions' => [
+                'placeholder' => 'Choose Jam Pulang',
+                'autoclose' => true
+            ]
+        ]
+    ]); ?>
+
+    <?= $form->field($model, 'logmasuk_id')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\app\models\base\PresensiPegawaiLog::find()->orderBy('logpresensi_id')->asArray()->all(), 'logpresensi_id', 'logpresensi_id'),
+        'options' => ['placeholder' => 'Choose Presensi pegawai log'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
+
+    <?= $form->field($model, 'logpulang_id')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\app\models\base\PresensiPegawaiLog::find()->orderBy('logpresensi_id')->asArray()->all(), 'logpresensi_id', 'logpresensi_id'),
+        'options' => ['placeholder' => 'Choose Presensi pegawai log'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
+
+    <?= $form->field($model, 'nokartu')->textInput(['maxlength' => true, 'placeholder' => 'Nokartu']) ?>
+
+    <?= $form->field($model, 'latitude')->textInput(['maxlength' => true, 'placeholder' => 'Latitude']) ?>
+
+    <?= $form->field($model, 'longitude')->textInput(['maxlength' => true, 'placeholder' => 'Longitude']) ?>
+
+    <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
+
+    <?= $form->field($model, 'kodeta')->textInput(['placeholder' => 'Kodeta']) ?>
+
+    <?= $form->field($model, 'kodekelas')->textInput(['maxlength' => true, 'placeholder' => 'Kodekelas']) ?>
+
+    <?= $form->field($model, 'generate_id')->textInput(['maxlength' => true, 'placeholder' => 'Generate']) ?>
+
+    <?= $form->field($model, 'created_at')->textInput(['placeholder' => 'Created At']) ?>
+
+    <?= $form->field($model, 'updated_at')->textInput(['placeholder' => 'Updated At']) ?>
+
+    <div class="form-group">
+        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Cancel'), Yii::$app->request->referrer , ['class'=> 'btn btn-danger']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
+
+</div>
